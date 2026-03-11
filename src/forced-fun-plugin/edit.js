@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { RichText, InspectorControls, MediaUpload, MediaUploadCheck, useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -21,6 +21,8 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 import './editor.scss';
 
+import { PanelBody, SelectControl, Button, TextControl } from '@wordpress/components';
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -29,39 +31,126 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
-
+export default function Edit({ attributes, setAttributes }) {
+	const { imageUrl, aspectRatio, headingText, headingLevel, paragraphText, buttonText, buttonUrl } = attributes;
 	const blockProps = useBlockProps();
-	
+	const ratioMap = {
+		'16:9': '56.25%',
+		'4:3': '75%',
+		'1:1': '100%',
+		'3:2': '66.66%'
+	};
+	const paddingTop = ratioMap[aspectRatio] || '56.25%';
+
 	return (
-		<div { ...blockProps }>
+		<div {...blockProps}>
+			<InspectorControls>
+				<PanelBody title={__('Image Settings', 'forced-fun-plugin')}>
+					<SelectControl
+						label={__('Aspect Ratio', 'forced-fun-plugin')}
+						value={aspectRatio}
+						options={[
+							{ label: '16:9', value: '16:9' },
+							{ label: '4:3', value: '4:3' },
+							{ label: '1:1', value: '1:1' },
+							{ label: '3:2', value: '3:2' }
+						]}
+						onChange={(value) => setAttributes({ aspectRatio: value })}
+					/>
+				</PanelBody>
+				<PanelBody title={__('Heading Settings', 'forced-fun-plugin')}>
+					<SelectControl
+						label={__('Heading Level', 'forced-fun-plugin')}
+						value={headingLevel}
+						options={[
+							{ label: 'H2', value: 'h2' },
+							{ label: 'H3', value: 'h3' }
+						]}
+						onChange={(value) => setAttributes({ headingLevel: value })}
+					/>
+				</PanelBody>
+				<PanelBody title={__('Button Settings', 'forced-fun-plugin')}>
+					<TextControl
+						label={__('Button Text', 'forced-fun-plugin')}
+						value={buttonText}
+						onChange={(value) => setAttributes({ buttonText: value })}
+						placeholder={__('Action', 'forced-fun-plugin')}
+					/>
+					<TextControl
+						label={__('Button URL', 'forced-fun-plugin')}
+						value={buttonUrl}
+						onChange={(value) => setAttributes({ buttonUrl: value })}
+						placeholder="https://example.com"
+					/>
+				</PanelBody>
+			</InspectorControls>
 
 			<div className="forced-fun-image-text">
-
-				<div className="forced-fun-image">
-					<div className="forced-fun-image-placeholder">
-						{ __('Image', 'forced-fun-plugin') }
-					</div>
+				<div
+					className="forced-fun-image"
+					style={{
+						position: 'relative',
+						width: '100%',
+						paddingTop, // dynamic aspect ratio
+						overflow: 'hidden',
+					}}
+				>
+					{imageUrl ? (
+						<img
+							src={imageUrl}
+							alt={__('Selected image', 'forced-fun-plugin')}
+							style={{
+								position: 'absolute',
+								top: 0,
+								left: 0,
+								width: '100%',
+								height: '100%',
+								objectFit: 'cover',
+							}}
+						/>
+					) : (
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={(media) => setAttributes({ imageUrl: media.url })}
+								allowedTypes={['image']}
+								value={imageUrl}
+								render={({ open }) => (
+									<Button onClick={open} className="forced-fun-image-placeholder">
+										{__('Select Image', 'forced-fun-plugin')}
+									</Button>
+								)}
+							/>
+						</MediaUploadCheck>
+					)}
 				</div>
 
 				<div className="forced-fun-content">
-
-					<h3>
-						{ __('Heading placeholder', 'forced-fun-plugin') }
-					</h3>
-
-					<p>
-						{ __('Paragraph content goes here.', 'forced-fun-plugin') }
-					</p>
-
-					<button className="forced-fun-button">
-						{ __('Action', 'forced-fun-plugin') }
-					</button>
+					<RichText
+						tagName={headingLevel}
+						value={headingText}
+						onChange={(value) => setAttributes({ headingText: value })}
+						placeholder={__('Heading', 'forced-fun-plugin')}
+					/>
+					<RichText
+						tagName="p"
+						value={paragraphText}
+						onChange={(value) => setAttributes({ paragraphText: value })}
+						placeholder={__('Content', 'forced-fun-plugin')}
+					/>
+					<div
+						className="forced-fun-button"
+					>
+						<RichText
+							tagName="span"
+							value={buttonText}
+							onChange={(value) => setAttributes({ buttonText: value })}
+							placeholder={__('Action', 'forced-fun-plugin')}
+							keepPlaceholderOnFocus
+						/>
+					</div>
 
 				</div>
-
 			</div>
-
-		</div>
+		</div >
 	);
 }

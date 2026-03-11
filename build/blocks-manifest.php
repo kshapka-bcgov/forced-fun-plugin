@@ -16,6 +16,36 @@ return array(
 		'supports' => array(
 			'html' => false
 		),
+		'attributes' => array(
+			'imageUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'aspectRatio' => array(
+				'type' => 'string',
+				'default' => '16:9'
+			),
+			'headingText' => array(
+				'type' => 'string',
+				'default' => 'Heading placeholder'
+			),
+			'headingLevel' => array(
+				'type' => 'string',
+				'default' => 'h3'
+			),
+			'paragraphText' => array(
+				'type' => 'string',
+				'default' => 'Paragraph placeholder'
+			),
+			'buttonText' => array(
+				'type' => 'string',
+				'default' => 'Button placeholder'
+			),
+			'buttonUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			)
+		),
 		'textdomain' => 'forced-fun-plugin',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',

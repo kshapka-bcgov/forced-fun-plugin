@@ -11,6 +11,36 @@
 	"supports": {
 		"html": false
 	},
+	"attributes": {
+		"imageUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"aspectRatio": {
+			"type": "string",
+			"default": "16:9"
+		},
+		"headingText": {
+			"type": "string",
+			"default": "Heading placeholder"
+		},
+		"headingLevel": {
+			"type": "string",
+			"default": "h3"
+		},
+		"paragraphText": {
+			"type": "string",
+			"default": "Paragraph placeholder"
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Button placeholder"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
 	"textdomain": "forced-fun-plugin",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",

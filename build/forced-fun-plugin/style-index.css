@@ -12,8 +12,11 @@
   gap: 24px;
   align-items: flex-start;
 }
-.wp-block-create-block-forced-fun-plugin .forced-fun-image {
-  width: 40%;
+.wp-block-create-block-forced-fun-plugin .forced-fun-image img {
+  max-width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 8px;
 }
 .wp-block-create-block-forced-fun-plugin .forced-fun-image-placeholder {
   background: #ddd;
@@ -27,7 +30,29 @@
   width: 60%;
 }
 .wp-block-create-block-forced-fun-plugin .forced-fun-button {
-  margin-top: 16px;
+  background-color: #0073aa;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.2;
+  min-width: 4em;
+  cursor: pointer;
+}
+.wp-block-create-block-forced-fun-plugin .forced-fun-button:hover {
+  background-color: #006799;
+}
+.wp-block-create-block-forced-fun-plugin .forced-fun-button span {
+  display: inline-block;
+  cursor: text;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
 }
 
 /*# sourceMappingURL=style-index.css.map*/
