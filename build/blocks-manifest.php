@@ -14,7 +14,13 @@ return array(
 			
 		),
 		'supports' => array(
-			'html' => false
+			'html' => false,
+			'color' => array(
+				'text' => true,
+				'background' => true,
+				'link' => true,
+				'gradients' => true
+			)
 		),
 		'attributes' => array(
 			'imageUrl' => array(
@@ -36,15 +42,10 @@ return array(
 			'paragraphText' => array(
 				'type' => 'string',
 				'default' => 'Paragraph placeholder'
-			),
-			'buttonText' => array(
-				'type' => 'string',
-				'default' => 'Button placeholder'
-			),
-			'buttonUrl' => array(
-				'type' => 'string',
-				'default' => ''
 			)
+		),
+		'allowedBlocks' => array(
+			'core/button'
 		),
 		'textdomain' => 'forced-fun-plugin',
 		'editorScript' => 'file:./index.js',

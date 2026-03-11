@@ -9,7 +9,7 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
-$block_props = get_block_wrapper_attributes();
+$wrapper_attributes = get_block_wrapper_attributes();
 // Aspect ratio
 $ratio_map = array(
 	'16:9' => '56.25%',
@@ -28,11 +28,9 @@ $heading_text = !empty($attributes['headingText']) ? $attributes['headingText'] 
 // Paragraph
 $paragraph_text = !empty($attributes['paragraphText']) ? $attributes['paragraphText'] : __('Content', 'forced-fun-plugin');
 
-// Button
-$button_text = !empty($attributes['buttonText']) ? $attributes['buttonText'] : __('Click me', 'forced-fun-plugin');
-$button_url = !empty($attributes['buttonUrl']) ? $attributes['buttonUrl'] : '#';
 ?>
-<div <?php echo $block_props; ?>>
+
+<div <?php echo $wrapper_attributes; ?>>
 	<div class="forced-fun-image-text">
 		<div class="forced-fun-image"
 			style="position:relative;width:100%;padding-top:<?php echo esc_attr($padding_top); ?>;overflow:hidden;">
@@ -51,10 +49,9 @@ $button_url = !empty($attributes['buttonUrl']) ? $attributes['buttonUrl'] : '#';
 		<div class="forced-fun-content">
 			<<?php echo esc_html($heading_level); ?>><?php echo esc_html($heading_text); ?></<?php echo esc_html($heading_level); ?>>
 			<p><?php echo esc_html($paragraph_text); ?></p>
-			<button class="forced-fun-button" <?php if ($button_url): ?>
-					onclick="window.location.href='<?php echo esc_url($button_url); ?>'" <?php endif; ?>>
-				<?php echo esc_html($button_text); ?>
-			</button>
+			<div class="forced-fun-buttons">
+				<?php echo do_blocks($content); ?>
+			</div>
 		</div>
 	</div>
 </div>

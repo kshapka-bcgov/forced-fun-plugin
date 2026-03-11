@@ -9,7 +9,13 @@
   "description": "Display fun text with fun visual content.",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true,
+      "gradients": true
+    }
   },
   "attributes": {
     "imageUrl": {
@@ -31,16 +37,11 @@
     "paragraphText": {
       "type": "string",
       "default": "Paragraph placeholder"
-    },
-    "buttonText": {
-      "type": "string",
-      "default": "Button placeholder"
-    },
-    "buttonUrl": {
-      "type": "string",
-      "default": ""
     }
   },
+  "allowedBlocks": [
+    "core/button"
+  ],
   "textdomain": "forced-fun-plugin",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",

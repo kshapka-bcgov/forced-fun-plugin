@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { RichText, InspectorControls, MediaUpload, MediaUploadCheck, useBlockProps } from '@wordpress/block-editor';
+import { RichText, InspectorControls, MediaUpload, MediaUploadCheck, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -23,6 +23,11 @@ import './editor.scss';
 
 import { PanelBody, SelectControl, Button, TextControl } from '@wordpress/components';
 
+const ALLOWED_BLOCKS = ['core/button'];
+const TEMPLATE = [
+	['core/button', { text: 'Action' }]
+];
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -31,9 +36,11 @@ import { PanelBody, SelectControl, Button, TextControl } from '@wordpress/compon
  *
  * @return {Element} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
-	const { imageUrl, aspectRatio, headingText, headingLevel, paragraphText, buttonText, buttonUrl } = attributes;
+function Edit({ attributes, setAttributes }) {
+	const { imageUrl, aspectRatio, headingText, headingLevel, paragraphText } = attributes;
 	const blockProps = useBlockProps();
+
+	// Aspect Ratio settings
 	const ratioMap = {
 		'16:9': '56.25%',
 		'4:3': '75%',
@@ -69,20 +76,6 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) => setAttributes({ headingLevel: value })}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Button Settings', 'forced-fun-plugin')}>
-					<TextControl
-						label={__('Button Text', 'forced-fun-plugin')}
-						value={buttonText}
-						onChange={(value) => setAttributes({ buttonText: value })}
-						placeholder={__('Action', 'forced-fun-plugin')}
-					/>
-					<TextControl
-						label={__('Button URL', 'forced-fun-plugin')}
-						value={buttonUrl}
-						onChange={(value) => setAttributes({ buttonUrl: value })}
-						placeholder="https://example.com"
-					/>
-				</PanelBody>
 			</InspectorControls>
 
 			<div className="forced-fun-image-text">
@@ -91,7 +84,7 @@ export default function Edit({ attributes, setAttributes }) {
 					style={{
 						position: 'relative',
 						width: '100%',
-						paddingTop, // dynamic aspect ratio
+						paddingTop,
 						overflow: 'hidden',
 					}}
 				>
@@ -137,20 +130,15 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) => setAttributes({ paragraphText: value })}
 						placeholder={__('Content', 'forced-fun-plugin')}
 					/>
-					<div
-						className="forced-fun-button"
-					>
-						<RichText
-							tagName="span"
-							value={buttonText}
-							onChange={(value) => setAttributes({ buttonText: value })}
-							placeholder={__('Action', 'forced-fun-plugin')}
-							keepPlaceholderOnFocus
-						/>
-					</div>
-
+					<InnerBlocks
+						allowedBlocks={ALLOWED_BLOCKS}
+						template={TEMPLATE}
+						templateLock={false}
+					/>
 				</div>
 			</div>
 		</div >
 	);
 }
+
+export default Edit;
