@@ -9,7 +9,30 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+$block_props = get_block_wrapper_attributes();
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Forced Fun Plugin – hello from a dynamic block!', 'forced-fun-plugin' ); ?>
-</p>
+<div <?php echo $block_props; ?>>
+
+    <div class="forced-fun-image-text">
+
+        <div class="forced-fun-image">
+            <div class="forced-fun-image-placeholder">
+                <?php echo esc_html__( 'Image', 'forced-fun-plugin' ); ?>
+            </div>
+        </div>
+
+        <div class="forced-fun-content">
+
+            <h3><?php echo esc_html__( 'Heading placeholder', 'forced-fun-plugin' ); ?></h3>
+
+            <p><?php echo esc_html__( 'Paragraph content goes here.', 'forced-fun-plugin' ); ?></p>
+
+            <button class="forced-fun-button">
+                <?php echo esc_html__( 'Action', 'forced-fun-plugin' ); ?>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

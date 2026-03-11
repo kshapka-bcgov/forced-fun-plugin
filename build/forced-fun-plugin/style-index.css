@@ -1,1 +1,33 @@
-.wp-block-create-block-forced-fun-plugin{background-color:#21759b;color:#fff;padding:2px}
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/forced-fun-plugin/style.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-create-block-forced-fun-plugin .forced-fun-image-text {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.wp-block-create-block-forced-fun-plugin .forced-fun-image {
+  width: 40%;
+}
+.wp-block-create-block-forced-fun-plugin .forced-fun-image-placeholder {
+  background: #ddd;
+  height: 200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wp-block-create-block-forced-fun-plugin .forced-fun-content {
+  width: 60%;
+}
+.wp-block-create-block-forced-fun-plugin .forced-fun-button {
+  margin-top: 16px;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

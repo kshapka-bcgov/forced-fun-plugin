@@ -6,7 +6,31 @@
  */
 
 .wp-block-create-block-forced-fun-plugin {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+
+	.forced-fun-image-text {
+		display: flex;
+		gap: 24px;
+		align-items: flex-start;
+	}
+
+	.forced-fun-image {
+		width: 40%;
+	}
+
+	.forced-fun-image-placeholder {
+		background: #ddd;
+		height: 200px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.forced-fun-content {
+		width: 60%;
+	}
+
+	.forced-fun-button {
+		margin-top: 16px;
+	}
 }

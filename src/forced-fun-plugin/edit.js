@@ -30,12 +30,38 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit() {
+
+	const blockProps = useBlockProps();
+	
 	return (
-		<p { ...useBlockProps() }>
-			{ __(
-				'Forced Fun Plugin – hello from the editor!',
-				'forced-fun-plugin'
-			) }
-		</p>
+		<div { ...blockProps }>
+
+			<div className="forced-fun-image-text">
+
+				<div className="forced-fun-image">
+					<div className="forced-fun-image-placeholder">
+						{ __('Image', 'forced-fun-plugin') }
+					</div>
+				</div>
+
+				<div className="forced-fun-content">
+
+					<h3>
+						{ __('Heading placeholder', 'forced-fun-plugin') }
+					</h3>
+
+					<p>
+						{ __('Paragraph content goes here.', 'forced-fun-plugin') }
+					</p>
+
+					<button className="forced-fun-button">
+						{ __('Action', 'forced-fun-plugin') }
+					</button>
+
+				</div>
+
+			</div>
+
+		</div>
 	);
 }
