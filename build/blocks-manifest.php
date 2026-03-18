@@ -23,6 +23,10 @@ return array(
 			)
 		),
 		'attributes' => array(
+			'layout' => array(
+				'type' => 'string',
+				'default' => 'image-left'
+			),
 			'imageUrl' => array(
 				'type' => 'string',
 				'default' => ''
@@ -42,14 +46,12 @@ return array(
 			'paragraphText' => array(
 				'type' => 'string',
 				'default' => 'Paragraph placeholder'
-			),
-			'showImage' => array(
-				'type' => 'boolean',
-				'default' => true
 			)
 		),
 		'allowedBlocks' => array(
-			'core/button'
+			'core/button',
+			'core/image',
+			'core/paragraph'
 		),
 		'textdomain' => 'forced-fun-plugin',
 		'editorScript' => 'file:./index.js',

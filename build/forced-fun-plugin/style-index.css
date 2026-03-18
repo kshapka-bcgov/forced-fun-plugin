@@ -53,5 +53,18 @@
      -moz-user-select: text;
           user-select: text;
 }
+@media (max-width: 768px) {
+  .wp-block-create-block-forced-fun-plugin .forced-fun-image-text {
+    flex-direction: column;
+  }
+  /* Ensure image spans full width when stacked */
+  .wp-block-create-block-forced-fun-plugin .forced-fun-image {
+    width: 100%;
+  }
+  /* Optional: improve spacing */
+  .wp-block-create-block-forced-fun-plugin .forced-fun-content {
+    width: 100%;
+  }
+}
 
 /*# sourceMappingURL=style-index.css.map*/

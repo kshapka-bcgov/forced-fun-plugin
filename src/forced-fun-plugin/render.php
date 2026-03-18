@@ -10,6 +10,11 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 $wrapper_attributes = get_block_wrapper_attributes();
+// Layout
+$layout = !empty($attributes['layout']) ? $attributes['layout'] : 'image-left';
+$show_image = $layout !== 'no-image';
+$image_first = $layout === 'image-left';
+
 // Aspect ratio
 $ratio_map = array(
 	'16:9' => '56.25%',
@@ -32,7 +37,7 @@ $paragraph_text = !empty($attributes['paragraphText']) ? $attributes['paragraphT
 
 <div <?php echo $wrapper_attributes; ?>>
 	<div class="forced-fun-image-text">
-		<?php if (!empty($attributes['showImage'])): ?>
+		<?php if ($show_image && $image_first): ?>
 			<div class="forced-fun-image"
 				style="position:relative;width:100%;padding-top:<?php echo esc_attr($padding_top); ?>;overflow:hidden;">
 
@@ -55,5 +60,21 @@ $paragraph_text = !empty($attributes['paragraphText']) ? $attributes['paragraphT
 				<?php echo do_blocks($content); ?>
 			</div>
 		</div>
+
+		<?php if ($show_image && !$image_first): ?>
+			<div class="forced-fun-image"
+				style="position:relative;width:100%;padding-top:<?php echo esc_attr($padding_top); ?>;overflow:hidden;">
+
+				<?php if (!empty($attributes['imageUrl'])): ?>
+					<img src="<?php echo esc_url($attributes['imageUrl']); ?>"
+						alt="<?php esc_attr_e('Selected image', 'forced-fun-plugin'); ?>"
+						style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" />
+				<?php else: ?>
+					<div class="forced-fun-image-placeholder">
+						<?php esc_html_e('Image', 'forced-fun-plugin'); ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
 	</div>
 </div>

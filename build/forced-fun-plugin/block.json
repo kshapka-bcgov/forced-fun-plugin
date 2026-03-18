@@ -18,6 +18,10 @@
     }
   },
   "attributes": {
+    "layout": {
+      "type": "string",
+      "default": "image-left"
+    },
     "imageUrl": {
       "type": "string",
       "default": ""
@@ -37,14 +41,12 @@
     "paragraphText": {
       "type": "string",
       "default": "Paragraph placeholder"
-    },
-    "showImage": {
-      "type": "boolean",
-      "default": true
     }
   },
   "allowedBlocks": [
-    "core/button"
+    "core/button",
+    "core/image",
+    "core/paragraph"
   ],
   "textdomain": "forced-fun-plugin",
   "editorScript": "file:./index.js",

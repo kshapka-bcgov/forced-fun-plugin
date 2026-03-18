@@ -36,8 +36,8 @@ import {
 	ToggleControl,
 } from "@wordpress/components";
 
-const ALLOWED_BLOCKS = ["core/button"];
-const TEMPLATE = [["core/button", { text: "Action" }]];
+const ALLOWED_BLOCKS = ["core/button", "core/image"];
+const BUTTON_TEMPLATE = [["core/button", { text: "Action" }]];
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -48,9 +48,19 @@ const TEMPLATE = [["core/button", { text: "Action" }]];
  * @return {Element} Element to render.
  */
 function Edit({ attributes, setAttributes }) {
-	const { imageUrl, aspectRatio, headingText, headingLevel, paragraphText } =
-		attributes;
+	const {
+		layout,
+		imageUrl,
+		aspectRatio,
+		headingText,
+		headingLevel,
+		paragraphText,
+	} = attributes;
 	const blockProps = useBlockProps();
+
+	// Layout settings
+	const showImage = "no-image" !== layout;
+	const imageFirst = "image-left" === layout;
 
 	// Aspect Ratio settings
 	const ratioMap = {
@@ -64,25 +74,33 @@ function Edit({ attributes, setAttributes }) {
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody title={__("Image Settings", "forced-fun-plugin")}>
-					<ToggleControl
-						label={__("Show Image", "forced-fun-plugin")}
-						checked={attributes.showImage}
-						onChange={(value) => setAttributes({ showImage: value })}
-					/>
-					{attributes.showImage && (
+				<PanelBody title={__("Layout", "forced-fun-plugin")}>
 					<SelectControl
-						label={__("Aspect Ratio", "forced-fun-plugin")}
-						value={aspectRatio}
+						label={__("Layout", "forced-fun-plugin")}
+						value={attributes.layout}
 						options={[
-							{ label: "16:9", value: "16:9" },
-							{ label: "4:3", value: "4:3" },
-							{ label: "1:1", value: "1:1" },
-							{ label: "3:2", value: "3:2" },
+							{ label: "Image Left", value: "image-left" },
+							{ label: "Image Right", value: "image-right" },
+							{ label: "No Image", value: "no-image" },
 						]}
-						onChange={(value) => setAttributes({ aspectRatio: value })}
-					/>)}
+						onChange={(value) => setAttributes({ layout: value })}
+					/>
 				</PanelBody>
+				{showImage && (
+					<PanelBody title={__("Image Settings", "forced-fun-plugin")}>
+						<SelectControl
+							label={__("Aspect Ratio", "forced-fun-plugin")}
+							value={aspectRatio}
+							options={[
+								{ label: "16:9", value: "16:9" },
+								{ label: "4:3", value: "4:3" },
+								{ label: "1:1", value: "1:1" },
+								{ label: "3:2", value: "3:2" },
+							]}
+							onChange={(value) => setAttributes({ aspectRatio: value })}
+						/>
+					</PanelBody>
+				)}
 				<PanelBody title={__("Heading Settings", "forced-fun-plugin")}>
 					<SelectControl
 						label={__("Heading Level", "forced-fun-plugin")}
@@ -97,47 +115,47 @@ function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 
 			<div className="forced-fun-image-text">
-				{attributes.showImage && (
-				<div
-					className="forced-fun-image"
-					style={{
-						position: "relative",
-						width: "100%",
-						paddingTop,
-						overflow: "hidden",
-					}}
-				>
-					{imageUrl ? (
-						<img
-							src={imageUrl}
-							alt={__("Selected image", "forced-fun-plugin")}
-							style={{
-								position: "absolute",
-								top: 0,
-								left: 0,
-								width: "100%",
-								height: "100%",
-								objectFit: "cover",
-							}}
-						/>
-					) : (
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={(media) => setAttributes({ imageUrl: media.url })}
-								allowedTypes={["image"]}
-								value={imageUrl}
-								render={({ open }) => (
-									<Button
-										onClick={open}
-										className="forced-fun-image-placeholder"
-									>
-										{__("Select Image", "forced-fun-plugin")}
-									</Button>
-								)}
+				{showImage && imageFirst && (
+					<div
+						className="forced-fun-image"
+						style={{
+							position: "relative",
+							width: "100%",
+							paddingTop,
+							overflow: "hidden",
+						}}
+					>
+						{imageUrl ? (
+							<img
+								src={imageUrl}
+								alt={__("Selected image", "forced-fun-plugin")}
+								style={{
+									position: "absolute",
+									top: 0,
+									left: 0,
+									width: "100%",
+									height: "100%",
+									objectFit: "cover",
+								}}
 							/>
-						</MediaUploadCheck>
-					)}
-				</div>
+						) : (
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={(media) => setAttributes({ imageUrl: media.url })}
+									allowedTypes={["image"]}
+									value={imageUrl}
+									render={({ open }) => (
+										<Button
+											onClick={open}
+											className="forced-fun-image-placeholder"
+										>
+											{__("Select Image", "forced-fun-plugin")}
+										</Button>
+									)}
+								/>
+							</MediaUploadCheck>
+						)}
+					</div>
 				)}
 				<div className="forced-fun-content">
 					<RichText
@@ -158,6 +176,48 @@ function Edit({ attributes, setAttributes }) {
 						templateLock={false}
 					/>
 				</div>
+				{showImage && !imageFirst && (
+					<div
+						className="forced-fun-image"
+						style={{
+							position: "relative",
+							width: "100%",
+							paddingTop,
+							overflow: "hidden",
+						}}
+					>
+						{imageUrl ? (
+							<img
+								src={imageUrl}
+								alt={__("Selected image", "forced-fun-plugin")}
+								style={{
+									position: "absolute",
+									top: 0,
+									left: 0,
+									width: "100%",
+									height: "100%",
+									objectFit: "cover",
+								}}
+							/>
+						) : (
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={(media) => setAttributes({ imageUrl: media.url })}
+									allowedTypes={["image"]}
+									value={imageUrl}
+									render={({ open }) => (
+										<Button
+											onClick={open}
+											className="forced-fun-image-placeholder"
+										>
+											{__("Select Image", "forced-fun-plugin")}
+										</Button>
+									)}
+								/>
+							</MediaUploadCheck>
+						)}
+					</div>
+				)}
 			</div>
 		</div>
 	);
