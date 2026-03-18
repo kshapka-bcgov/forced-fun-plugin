@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,14 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import {
+	RichText,
+	InspectorControls,
+	MediaUpload,
+	MediaUploadCheck,
+	useBlockProps,
+	InnerBlocks,
+} from "@wordpress/block-editor";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -19,7 +26,18 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import "./editor.scss";
+
+import {
+	PanelBody,
+	SelectControl,
+	Button,
+	TextControl,
+	ToggleControl,
+} from "@wordpress/components";
+
+const ALLOWED_BLOCKS = ["core/button"];
+const TEMPLATE = [["core/button", { text: "Action" }]];
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -29,13 +47,120 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+function Edit({ attributes, setAttributes }) {
+	const { imageUrl, aspectRatio, headingText, headingLevel, paragraphText } =
+		attributes;
+	const blockProps = useBlockProps();
+
+	// Aspect Ratio settings
+	const ratioMap = {
+		"16:9": "56.25%",
+		"4:3": "75%",
+		"1:1": "100%",
+		"3:2": "66.66%",
+	};
+	const paddingTop = ratioMap[aspectRatio] || "56.25%";
+
 	return (
-		<p { ...useBlockProps() }>
-			{ __(
-				'Forced Fun Plugin – hello from the editor!',
-				'forced-fun-plugin'
-			) }
-		</p>
+		<div {...blockProps}>
+			<InspectorControls>
+				<PanelBody title={__("Image Settings", "forced-fun-plugin")}>
+					<ToggleControl
+						label={__("Show Image", "forced-fun-plugin")}
+						checked={attributes.showImage}
+						onChange={(value) => setAttributes({ showImage: value })}
+					/>
+					{attributes.showImage && (
+					<SelectControl
+						label={__("Aspect Ratio", "forced-fun-plugin")}
+						value={aspectRatio}
+						options={[
+							{ label: "16:9", value: "16:9" },
+							{ label: "4:3", value: "4:3" },
+							{ label: "1:1", value: "1:1" },
+							{ label: "3:2", value: "3:2" },
+						]}
+						onChange={(value) => setAttributes({ aspectRatio: value })}
+					/>)}
+				</PanelBody>
+				<PanelBody title={__("Heading Settings", "forced-fun-plugin")}>
+					<SelectControl
+						label={__("Heading Level", "forced-fun-plugin")}
+						value={headingLevel}
+						options={[
+							{ label: "H2", value: "h2" },
+							{ label: "H3", value: "h3" },
+						]}
+						onChange={(value) => setAttributes({ headingLevel: value })}
+					/>
+				</PanelBody>
+			</InspectorControls>
+
+			<div className="forced-fun-image-text">
+				{attributes.showImage && (
+				<div
+					className="forced-fun-image"
+					style={{
+						position: "relative",
+						width: "100%",
+						paddingTop,
+						overflow: "hidden",
+					}}
+				>
+					{imageUrl ? (
+						<img
+							src={imageUrl}
+							alt={__("Selected image", "forced-fun-plugin")}
+							style={{
+								position: "absolute",
+								top: 0,
+								left: 0,
+								width: "100%",
+								height: "100%",
+								objectFit: "cover",
+							}}
+						/>
+					) : (
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={(media) => setAttributes({ imageUrl: media.url })}
+								allowedTypes={["image"]}
+								value={imageUrl}
+								render={({ open }) => (
+									<Button
+										onClick={open}
+										className="forced-fun-image-placeholder"
+									>
+										{__("Select Image", "forced-fun-plugin")}
+									</Button>
+								)}
+							/>
+						</MediaUploadCheck>
+					)}
+				</div>
+				)}
+				<div className="forced-fun-content">
+					<RichText
+						tagName={headingLevel}
+						value={headingText}
+						onChange={(value) => setAttributes({ headingText: value })}
+						placeholder={__("Heading", "forced-fun-plugin")}
+					/>
+					<RichText
+						tagName="p"
+						value={paragraphText}
+						onChange={(value) => setAttributes({ paragraphText: value })}
+						placeholder={__("Content", "forced-fun-plugin")}
+					/>
+					<InnerBlocks
+						allowedBlocks={ALLOWED_BLOCKS}
+						template={TEMPLATE}
+						templateLock={false}
+					/>
+				</div>
+			</div>
+		</div>
 	);
 }
+
+export default Edit;

@@ -3,14 +3,49 @@
   "apiVersion": 3,
   "name": "create-block/forced-fun-plugin",
   "version": "0.1.0",
-  "title": "Forced Fun Plugin",
+  "title": "Forced Fun Block",
   "category": "widgets",
   "icon": "smiley",
-  "description": "Example block scaffolded with Create Block tool.",
+  "description": "Display fun text with fun visual content.",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true,
+      "gradients": true
+    }
   },
+  "attributes": {
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "aspectRatio": {
+      "type": "string",
+      "default": "16:9"
+    },
+    "headingText": {
+      "type": "string",
+      "default": "Heading placeholder"
+    },
+    "headingLevel": {
+      "type": "string",
+      "default": "h3"
+    },
+    "paragraphText": {
+      "type": "string",
+      "default": "Paragraph placeholder"
+    },
+    "showImage": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "allowedBlocks": [
+    "core/button"
+  ],
   "textdomain": "forced-fun-plugin",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",

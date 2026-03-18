@@ -5,5 +5,56 @@
  */
 
 .wp-block-create-block-forced-fun-plugin {
-	border: 1px dotted #f00;
+	.forced-fun-image-text {
+		display: flex;
+		gap: 24px;
+		align-items: flex-start;
+		border: 1px solid #b5bdbc;
+		border-radius: 8px;
+		box-sizing: border-box;
+		overflow: hidden;
+		align-items: stretch;
+
+		height: auto;
+		max-width: 100%;
+	}
+
+	.forced-fun-image img {}
+
+	.forced-fun-image-placeholder {
+		background: #ddd;
+		height: 200px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.forced-fun-content {
+		margin: 1rem;
+	}
+
+	.forced-fun-button {
+		border: none;
+		border-radius: 4px;
+		padding: 0.5em 1em;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		font-size: 16px;
+		line-height: 1.2;
+		min-width: 4em;
+		cursor: pointer;
+
+		&:hover {
+			background-color: #006799;
+		}
+
+		span {
+			display: inline-block;
+			cursor: text;
+			user-select: text;
+		}
+	}
 }
