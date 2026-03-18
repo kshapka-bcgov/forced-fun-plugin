@@ -11,12 +11,13 @@
   display: flex;
   gap: 24px;
   align-items: flex-start;
-}
-.wp-block-create-block-forced-fun-plugin .forced-fun-image img {
-  max-width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  border: 1px solid #b5bdbc;
   border-radius: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  align-items: stretch;
+  height: auto;
+  max-width: 100%;
 }
 .wp-block-create-block-forced-fun-plugin .forced-fun-image-placeholder {
   background: #ddd;
@@ -27,7 +28,7 @@
   justify-content: center;
 }
 .wp-block-create-block-forced-fun-plugin .forced-fun-content {
-  width: 60%;
+  margin: 1rem;
 }
 .wp-block-create-block-forced-fun-plugin .forced-fun-button {
   border: none;

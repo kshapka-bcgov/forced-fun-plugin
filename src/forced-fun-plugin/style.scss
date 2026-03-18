@@ -6,18 +6,21 @@
  */
 
 .wp-block-create-block-forced-fun-plugin {
-
 	.forced-fun-image-text {
 		display: flex;
 		gap: 24px;
 		align-items: flex-start;
+		border: 1px solid #b5bdbc;
+		border-radius: 8px;
+		box-sizing: border-box;
+		overflow: hidden;
+		align-items: stretch;
+
+		height: auto;
+		max-width: 100%;
 	}
 
-	.forced-fun-image img {
-		max-width: 100%;
-		object-fit: cover;
-		border-radius: 8px;
-	}
+	.forced-fun-image img {}
 
 	.forced-fun-image-placeholder {
 		background: #ddd;
@@ -29,7 +32,7 @@
 	}
 
 	.forced-fun-content {
-		width: 60%;
+		margin: 1rem;
 	}
 
 	.forced-fun-button {

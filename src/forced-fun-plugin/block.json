@@ -37,6 +37,10 @@
 		"paragraphText": {
 			"type": "string",
 			"default": "Paragraph placeholder"
+		},
+		"showImage": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"allowedBlocks": ["core/button"],

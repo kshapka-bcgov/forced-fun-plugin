@@ -32,19 +32,21 @@ $paragraph_text = !empty($attributes['paragraphText']) ? $attributes['paragraphT
 
 <div <?php echo $wrapper_attributes; ?>>
 	<div class="forced-fun-image-text">
-		<div class="forced-fun-image"
-			style="position:relative;width:100%;padding-top:<?php echo esc_attr($padding_top); ?>;overflow:hidden;">
-			<?php if (!empty($attributes['imageUrl'])): ?>
-				<img src="<?php echo esc_url($attributes['imageUrl']); ?>"
-					alt="<?php esc_attr_e('Selected image', 'forced-fun-plugin'); ?>"
-					style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" />
-			<?php else: ?>
-				<div class="forced-fun-image-placeholder"
-					style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#eee;">
-					<?php esc_html_e('Image', 'forced-fun-plugin'); ?>
-				</div>
-			<?php endif; ?>
-		</div>
+		<?php if (!empty($attributes['showImage'])): ?>
+			<div class="forced-fun-image"
+				style="position:relative;width:100%;padding-top:<?php echo esc_attr($padding_top); ?>;overflow:hidden;">
+
+				<?php if (!empty($attributes['imageUrl'])): ?>
+					<img src="<?php echo esc_url($attributes['imageUrl']); ?>"
+						alt="<?php esc_attr_e('Selected image', 'forced-fun-plugin'); ?>"
+						style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" />
+				<?php else: ?>
+					<div class="forced-fun-image-placeholder">
+						<?php esc_html_e('Image', 'forced-fun-plugin'); ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
 
 		<div class="forced-fun-content">
 			<<?php echo esc_html($heading_level); ?>><?php echo esc_html($heading_text); ?></<?php echo esc_html($heading_level); ?>>

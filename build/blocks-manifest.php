@@ -42,6 +42,10 @@ return array(
 			'paragraphText' => array(
 				'type' => 'string',
 				'default' => 'Paragraph placeholder'
+			),
+			'showImage' => array(
+				'type' => 'boolean',
+				'default' => true
 			)
 		),
 		'allowedBlocks' => array(
