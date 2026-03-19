@@ -52,7 +52,7 @@ function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<InnerBlocks template={TEMPLATE} templateLock={false} />
+			<InnerBlocks template={TEMPLATE} templateLock={true} />
 		</div>
 	);
 }
