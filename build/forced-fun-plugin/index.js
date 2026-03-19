@@ -16,39 +16,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/forced-fun-plugin/editor.scss");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/forced-fun-plugin/editor.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
 
 
 
-const ALLOWED_BLOCKS = ["core/button", "core/image"];
-const BUTTON_TEMPLATE = [["core/button", {
-  text: "Action"
-}]];
+
+
+const TEMPLATE = [["core/image"], ["core/group", {
+  className: "forced-fun-content"
+}, [["core/heading", {
+  placeholder: "Heading"
+}], ["core/paragraph", {
+  placeholder: "Content"
+}], ["core/buttons"]]]];
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -63,35 +47,19 @@ function Edit({
   setAttributes
 }) {
   const {
-    layout,
-    imageUrl,
-    aspectRatio,
-    headingText,
-    headingLevel,
-    paragraphText
+    layout
   } = attributes;
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
-
-  // Layout settings
-  const showImage = "no-image" !== layout;
-  const imageFirst = "image-left" === layout;
-
-  // Aspect Ratio settings
-  const ratioMap = {
-    "16:9": "56.25%",
-    "4:3": "75%",
-    "1:1": "100%",
-    "3:2": "66.66%"
-  };
-  const paddingTop = ratioMap[aspectRatio] || "56.25%";
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
+    className: `forced-fun-layout ${layout}`
+  });
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     ...blockProps,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Layout", "forced-fun-plugin"),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Layout", "forced-fun-plugin"),
-          value: attributes.layout,
+          value: layout,
           options: [{
             label: "Image Left",
             value: "image-left"
@@ -106,139 +74,10 @@ function Edit({
             layout: value
           })
         })
-      }), showImage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Image Settings", "forced-fun-plugin"),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Aspect Ratio", "forced-fun-plugin"),
-          value: aspectRatio,
-          options: [{
-            label: "16:9",
-            value: "16:9"
-          }, {
-            label: "4:3",
-            value: "4:3"
-          }, {
-            label: "1:1",
-            value: "1:1"
-          }, {
-            label: "3:2",
-            value: "3:2"
-          }],
-          onChange: value => setAttributes({
-            aspectRatio: value
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Heading Settings", "forced-fun-plugin"),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Heading Level", "forced-fun-plugin"),
-          value: headingLevel,
-          options: [{
-            label: "H2",
-            value: "h2"
-          }, {
-            label: "H3",
-            value: "h3"
-          }],
-          onChange: value => setAttributes({
-            headingLevel: value
-          })
-        })
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-      className: "forced-fun-image-text",
-      children: [showImage && imageFirst && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-        className: "forced-fun-image",
-        style: {
-          position: "relative",
-          width: "100%",
-          paddingTop,
-          overflow: "hidden"
-        },
-        children: imageUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-          src: imageUrl,
-          alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Selected image", "forced-fun-plugin"),
-          style: {
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover"
-          }
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-            onSelect: media => setAttributes({
-              imageUrl: media.url
-            }),
-            allowedTypes: ["image"],
-            value: imageUrl,
-            render: ({
-              open
-            }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-              onClick: open,
-              className: "forced-fun-image-placeholder",
-              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Select Image", "forced-fun-plugin")
-            })
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-        className: "forced-fun-content",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-          tagName: headingLevel,
-          value: headingText,
-          onChange: value => setAttributes({
-            headingText: value
-          }),
-          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Heading", "forced-fun-plugin")
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-          tagName: "p",
-          value: paragraphText,
-          onChange: value => setAttributes({
-            paragraphText: value
-          }),
-          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Content", "forced-fun-plugin")
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {
-          allowedBlocks: ALLOWED_BLOCKS,
-          template: TEMPLATE,
-          templateLock: false
-        })]
-      }), showImage && !imageFirst && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-        className: "forced-fun-image",
-        style: {
-          position: "relative",
-          width: "100%",
-          paddingTop,
-          overflow: "hidden"
-        },
-        children: imageUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-          src: imageUrl,
-          alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Selected image", "forced-fun-plugin"),
-          style: {
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover"
-          }
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-            onSelect: media => setAttributes({
-              imageUrl: media.url
-            }),
-            allowedTypes: ["image"],
-            value: imageUrl,
-            render: ({
-              open
-            }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-              onClick: open,
-              className: "forced-fun-image-placeholder",
-              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Select Image", "forced-fun-plugin")
-            })
-          })
-        })
-      })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {
+      template: TEMPLATE,
+      templateLock: false
     })]
   });
 }
@@ -317,11 +156,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Save = props => {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+function Save({
+  attributes
+}) {
+  const {
+    layout
+  } = attributes;
+  const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
+    className: `forced-fun-layout ${layout}`
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    ...blockProps,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, {})
   });
-};
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Save);
 
 /***/ },
@@ -406,7 +254,7 @@ module.exports = window["wp"]["i18n"];
   \******************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/forced-fun-plugin","version":"0.1.0","title":"Forced Fun Block","category":"widgets","icon":"smiley","description":"Display fun text with fun visual content.","example":{},"supports":{"html":false,"color":{"text":true,"background":true,"link":true,"gradients":true}},"attributes":{"layout":{"type":"string","default":"image-left"},"imageUrl":{"type":"string","default":""},"aspectRatio":{"type":"string","default":"16:9"},"headingText":{"type":"string","default":"Heading placeholder"},"headingLevel":{"type":"string","default":"h3"},"paragraphText":{"type":"string","default":"Paragraph placeholder"}},"allowedBlocks":["core/button","core/image","core/paragraph"],"textdomain":"forced-fun-plugin","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/forced-fun-plugin","version":"0.1.0","title":"Forced Fun Block","category":"widgets","icon":"smiley","description":"Display fun text with fun visual content.","example":{},"supports":{"html":false,"color":{"text":true,"background":true,"link":true,"gradients":true}},"attributes":{"layout":{"type":"string","default":"image-left"},"headingText":{"type":"string","default":"Heading placeholder"},"headingLevel":{"type":"string","default":"h3"},"paragraphText":{"type":"string","default":"Paragraph placeholder"}},"allowedBlocks":["core/button","core/image","core/paragraph"],"textdomain":"forced-fun-plugin","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ }
 

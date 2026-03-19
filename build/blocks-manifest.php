@@ -27,14 +27,6 @@ return array(
 				'type' => 'string',
 				'default' => 'image-left'
 			),
-			'imageUrl' => array(
-				'type' => 'string',
-				'default' => ''
-			),
-			'aspectRatio' => array(
-				'type' => 'string',
-				'default' => '16:9'
-			),
 			'headingText' => array(
 				'type' => 'string',
 				'default' => 'Heading placeholder'
@@ -57,7 +49,6 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
-		'render' => 'file:./render.php',
 		'viewScript' => 'file:./view.js'
 	)
 );
