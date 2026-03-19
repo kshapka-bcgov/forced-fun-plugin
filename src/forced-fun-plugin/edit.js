@@ -1,43 +1,25 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
 import { __ } from "@wordpress/i18n";
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
 import {
-	RichText,
-	InspectorControls,
-	MediaUpload,
-	MediaUploadCheck,
 	useBlockProps,
 	InnerBlocks,
+	InspectorControls,
 } from "@wordpress/block-editor";
+import { PanelBody, SelectControl } from "@wordpress/components";
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
 import "./editor.scss";
 
-import {
-	PanelBody,
-	SelectControl,
-	Button,
-	TextControl,
-	ToggleControl,
-} from "@wordpress/components";
-
-const ALLOWED_BLOCKS = ["core/button"];
-const TEMPLATE = [["core/button", { text: "Action" }]];
+const TEMPLATE = [
+	["core/image"],
+	[
+		"core/group",
+		{ className: "forced-fun-content" },
+		[
+			["core/heading", { placeholder: "Heading" }],
+			["core/paragraph", { placeholder: "Content" }],
+			["core/buttons"],
+		],
+	],
+];
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -48,117 +30,29 @@ const TEMPLATE = [["core/button", { text: "Action" }]];
  * @return {Element} Element to render.
  */
 function Edit({ attributes, setAttributes }) {
-	const { imageUrl, aspectRatio, headingText, headingLevel, paragraphText } =
-		attributes;
-	const blockProps = useBlockProps();
+	const { layout } = attributes;
 
-	// Aspect Ratio settings
-	const ratioMap = {
-		"16:9": "56.25%",
-		"4:3": "75%",
-		"1:1": "100%",
-		"3:2": "66.66%",
-	};
-	const paddingTop = ratioMap[aspectRatio] || "56.25%";
+	const blockProps = useBlockProps({
+		className: `forced-fun-layout ${layout}`,
+	});
 
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody title={__("Image Settings", "forced-fun-plugin")}>
-					<ToggleControl
-						label={__("Show Image", "forced-fun-plugin")}
-						checked={attributes.showImage}
-						onChange={(value) => setAttributes({ showImage: value })}
-					/>
-					{attributes.showImage && (
+				<PanelBody title={__("Layout", "forced-fun-plugin")}>
 					<SelectControl
-						label={__("Aspect Ratio", "forced-fun-plugin")}
-						value={aspectRatio}
+						label={__("Layout", "forced-fun-plugin")}
+						value={layout}
 						options={[
-							{ label: "16:9", value: "16:9" },
-							{ label: "4:3", value: "4:3" },
-							{ label: "1:1", value: "1:1" },
-							{ label: "3:2", value: "3:2" },
+							{ label: "Image Left", value: "image-left" },
+							{ label: "Image Right", value: "image-right" },
+							{ label: "No Image", value: "no-image" },
 						]}
-						onChange={(value) => setAttributes({ aspectRatio: value })}
-					/>)}
-				</PanelBody>
-				<PanelBody title={__("Heading Settings", "forced-fun-plugin")}>
-					<SelectControl
-						label={__("Heading Level", "forced-fun-plugin")}
-						value={headingLevel}
-						options={[
-							{ label: "H2", value: "h2" },
-							{ label: "H3", value: "h3" },
-						]}
-						onChange={(value) => setAttributes({ headingLevel: value })}
+						onChange={(value) => setAttributes({ layout: value })}
 					/>
 				</PanelBody>
 			</InspectorControls>
-
-			<div className="forced-fun-image-text">
-				{attributes.showImage && (
-				<div
-					className="forced-fun-image"
-					style={{
-						position: "relative",
-						width: "100%",
-						paddingTop,
-						overflow: "hidden",
-					}}
-				>
-					{imageUrl ? (
-						<img
-							src={imageUrl}
-							alt={__("Selected image", "forced-fun-plugin")}
-							style={{
-								position: "absolute",
-								top: 0,
-								left: 0,
-								width: "100%",
-								height: "100%",
-								objectFit: "cover",
-							}}
-						/>
-					) : (
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={(media) => setAttributes({ imageUrl: media.url })}
-								allowedTypes={["image"]}
-								value={imageUrl}
-								render={({ open }) => (
-									<Button
-										onClick={open}
-										className="forced-fun-image-placeholder"
-									>
-										{__("Select Image", "forced-fun-plugin")}
-									</Button>
-								)}
-							/>
-						</MediaUploadCheck>
-					)}
-				</div>
-				)}
-				<div className="forced-fun-content">
-					<RichText
-						tagName={headingLevel}
-						value={headingText}
-						onChange={(value) => setAttributes({ headingText: value })}
-						placeholder={__("Heading", "forced-fun-plugin")}
-					/>
-					<RichText
-						tagName="p"
-						value={paragraphText}
-						onChange={(value) => setAttributes({ paragraphText: value })}
-						placeholder={__("Content", "forced-fun-plugin")}
-					/>
-					<InnerBlocks
-						allowedBlocks={ALLOWED_BLOCKS}
-						template={TEMPLATE}
-						templateLock={false}
-					/>
-				</div>
-			</div>
+			<InnerBlocks template={TEMPLATE} templateLock={false} />
 		</div>
 	);
 }

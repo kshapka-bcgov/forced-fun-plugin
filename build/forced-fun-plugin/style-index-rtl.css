@@ -7,49 +7,51 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-.wp-block-create-block-forced-fun-plugin .forced-fun-image-text {
+.forced-fun-layout {
   display: flex;
   gap: 24px;
-  align-items: flex-start;
+  align-items: stretch;
   border: 1px solid #b5bdbc;
   border-radius: 8px;
-  box-sizing: border-box;
   overflow: hidden;
-  align-items: stretch;
-  height: auto;
-  max-width: 100%;
 }
-.wp-block-create-block-forced-fun-plugin .forced-fun-image-placeholder {
-  background: #ddd;
-  height: 200px;
-  width: 100%;
+.forced-fun-layout .wp-block-image {
+  flex: 0 0 40%;
+  margin: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
 }
-.wp-block-create-block-forced-fun-plugin .forced-fun-content {
-  margin: 1rem;
+.forced-fun-layout .forced-fun-content {
+  flex: 1 1 55%;
+  min-width: 200px;
+  order: 1;
+  padding: 1rem;
 }
-.wp-block-create-block-forced-fun-plugin .forced-fun-button {
-  border: none;
-  border-radius: 4px;
-  padding: 0.5em 1em;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 16px;
-  line-height: 1.2;
-  min-width: 4em;
-  cursor: pointer;
+.forced-fun-layout.image-left .wp-block-image {
+  order: 0;
 }
-.wp-block-create-block-forced-fun-plugin .forced-fun-button:hover {
-  background-color: #006799;
+.forced-fun-layout.image-left .forced-fun-content {
+  order: 1;
 }
-.wp-block-create-block-forced-fun-plugin .forced-fun-button span {
-  display: inline-block;
-  cursor: text;
-  -webkit-user-select: text;
-     -moz-user-select: text;
-          user-select: text;
+.forced-fun-layout.image-right .wp-block-image {
+  order: 1;
+}
+.forced-fun-layout.image-right .forced-fun-content {
+  order: 0;
+}
+.forced-fun-layout.no-image {
+  flex-direction: column;
+}
+.forced-fun-layout.no-image .wp-block-image {
+  display: none;
+}
+@media (max-width: 768px) {
+  .forced-fun-layout {
+    flex-direction: column;
+  }
+  .forced-fun-layout .wp-block-image,
+  .forced-fun-layout .forced-fun-content {
+    order: initial;
+    width: 100%;
+  }
 }

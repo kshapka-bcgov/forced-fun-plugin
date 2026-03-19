@@ -4,58 +4,60 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+.forced-fun-layout {
+	display: flex;
+	gap: 24px;
+	align-items: stretch;
+	border: 1px solid #b5bdbc;
+	border-radius: 8px;
+	overflow: hidden;
 
-.wp-block-create-block-forced-fun-plugin {
-	.forced-fun-image-text {
+	.wp-block-image {
+		flex: 0 0 40%;
+		margin: 0;
 		display: flex;
-		gap: 24px;
-		align-items: flex-start;
-		border: 1px solid #b5bdbc;
-		border-radius: 8px;
-		box-sizing: border-box;
-		overflow: hidden;
 		align-items: stretch;
-
-		height: auto;
-		max-width: 100%;
-	}
-
-	.forced-fun-image img {}
-
-	.forced-fun-image-placeholder {
-		background: #ddd;
-		height: 200px;
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 	}
 
 	.forced-fun-content {
-		margin: 1rem;
+		flex: 1 1 55%;
+		min-width: 200px;
+		order: 1;
+		padding: 1rem;
 	}
 
-	.forced-fun-button {
-		border: none;
-		border-radius: 4px;
-		padding: 0.5em 1em;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		font-size: 16px;
-		line-height: 1.2;
-		min-width: 4em;
-		cursor: pointer;
-
-		&:hover {
-			background-color: #006799;
+	&.image-left {
+		.wp-block-image {
+			order: 0;
 		}
+		.forced-fun-content {
+			order: 1;
+		}
+	}
 
-		span {
-			display: inline-block;
-			cursor: text;
-			user-select: text;
+	&.image-right {
+		.wp-block-image {
+			order: 1;
+		}
+		.forced-fun-content {
+			order: 0;
+		}
+	}
+
+	&.no-image {
+		flex-direction: column;
+
+		.wp-block-image {
+			display: none;
+		}
+	}
+
+	@media (max-width: 768px) {
+		flex-direction: column;
+		.wp-block-image,
+		.forced-fun-content {
+			order: initial;
+			width: 100%;
 		}
 	}
 }

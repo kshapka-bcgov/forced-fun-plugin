@@ -23,13 +23,9 @@ return array(
 			)
 		),
 		'attributes' => array(
-			'imageUrl' => array(
+			'layout' => array(
 				'type' => 'string',
-				'default' => ''
-			),
-			'aspectRatio' => array(
-				'type' => 'string',
-				'default' => '16:9'
+				'default' => 'image-left'
 			),
 			'headingText' => array(
 				'type' => 'string',
@@ -42,20 +38,17 @@ return array(
 			'paragraphText' => array(
 				'type' => 'string',
 				'default' => 'Paragraph placeholder'
-			),
-			'showImage' => array(
-				'type' => 'boolean',
-				'default' => true
 			)
 		),
 		'allowedBlocks' => array(
-			'core/button'
+			'core/button',
+			'core/image',
+			'core/paragraph'
 		),
 		'textdomain' => 'forced-fun-plugin',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
-		'render' => 'file:./render.php',
 		'viewScript' => 'file:./view.js'
 	)
 );

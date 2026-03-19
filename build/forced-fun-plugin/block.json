@@ -18,13 +18,9 @@
     }
   },
   "attributes": {
-    "imageUrl": {
+    "layout": {
       "type": "string",
-      "default": ""
-    },
-    "aspectRatio": {
-      "type": "string",
-      "default": "16:9"
+      "default": "image-left"
     },
     "headingText": {
       "type": "string",
@@ -37,19 +33,16 @@
     "paragraphText": {
       "type": "string",
       "default": "Paragraph placeholder"
-    },
-    "showImage": {
-      "type": "boolean",
-      "default": true
     }
   },
   "allowedBlocks": [
-    "core/button"
+    "core/button",
+    "core/image",
+    "core/paragraph"
   ],
   "textdomain": "forced-fun-plugin",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
-  "render": "file:./render.php",
   "viewScript": "file:./view.js"
 }

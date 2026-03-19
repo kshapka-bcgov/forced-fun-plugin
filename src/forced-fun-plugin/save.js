@@ -1,7 +1,17 @@
 import { __ } from "@wordpress/i18n";
-import { InnerBlocks } from "@wordpress/block-editor";
+import { useBlockProps, InnerBlocks } from "@wordpress/block-editor";
 
-const Save = (props) => {
-  return <><InnerBlocks.Content /></>;
-};
+function Save({ attributes }) {
+	const { layout } = attributes;
+
+	const blockProps = useBlockProps.save({
+		className: `forced-fun-layout ${layout}`,
+	});
+
+	return (
+		<div {...blockProps}>
+			<InnerBlocks.Content />
+		</div>
+	);
+}
 export default Save;
